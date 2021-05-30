@@ -28,6 +28,8 @@ import com.dtstack.flinkx.constants.ConfigConstant;
 import com.dtstack.flinkx.options.OptionParser;
 import com.dtstack.flinkx.reader.BaseDataReader;
 import com.dtstack.flinkx.reader.DataReaderFactory;
+import com.dtstack.flinkx.transform.BaseDataTransform;
+import com.dtstack.flinkx.transform.DataTransformFactory;
 import com.dtstack.flinkx.util.ResultPrintUtil;
 import com.dtstack.flinkx.writer.BaseDataWriter;
 import com.dtstack.flinkx.writer.DataWriterFactory;
@@ -124,6 +126,13 @@ public class Main {
 
         if (speedConfig.isRebalance()) {
             dataStream = dataStream.rebalance();
+        }
+        //load transform plugin
+        BaseDataTransform dataTransform = DataTransformFactory.getDataTransform(config,env);
+        DataStream<Row> transformStream = dataTransform.transformData(dataStream);
+        //如果需要转换
+        if (null != transformStream){
+            dataStream = transformStream;
         }
 
         BaseDataWriter dataWriter = DataWriterFactory.getDataWriter(config);

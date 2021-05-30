@@ -30,15 +30,18 @@ public class ContentConfig extends AbstractConfig {
 
     public final static String KEY_READER_CONFIG = "reader";
     public final static String KEY_WRITER_CONFIG = "writer";
+    public final static String KEY_TRANSFORM_CONFIG = "transform";
 
     ReaderConfig reader;
     WriterConfig writer;
+    TransformConfig transform;
 
     public ContentConfig(Map<String, Object> map) {
         super(map);
         if(map != null) {
             reader = new ReaderConfig((Map<String, Object>) map.get(KEY_READER_CONFIG));
             writer = new WriterConfig((Map<String, Object>) map.get(KEY_WRITER_CONFIG));
+            transform = new TransformConfig((Map<String, Object>) map.get(KEY_TRANSFORM_CONFIG));
         }
     }
 
@@ -58,4 +61,11 @@ public class ContentConfig extends AbstractConfig {
         this.writer = writer;
     }
 
+    public TransformConfig getTransform() {
+        return transform;
+    }
+
+    public void setTransform(TransformConfig transform) {
+        this.transform = transform;
+    }
 }
