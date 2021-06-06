@@ -144,12 +144,16 @@ public class Launcher {
         ContentConfig contentConfig = config.getJob().getContent().get(0);
         String readerName = contentConfig.getReader().getName().toLowerCase();
         File readerDir = new File(pluginRoot + File.separator + readerName);
+        //增加转换插件的加载
+        String transformName = contentConfig.getTransform().getName().toLowerCase();
+        File transformDir = new File(pluginRoot + File.separator + transformName);
         String writerName = contentConfig.getWriter().getName().toLowerCase();
         File writerDir = new File(pluginRoot + File.separator + writerName);
         File commonDir = new File(pluginRoot + File.separator + "common");
 
         try {
             urlList.addAll(SysUtil.findJarsInDir(readerDir));
+            urlList.addAll(SysUtil.findJarsInDir(transformDir));
             urlList.addAll(SysUtil.findJarsInDir(writerDir));
             urlList.addAll(SysUtil.findJarsInDir(commonDir));
         } catch (MalformedURLException e) {
